@@ -52,7 +52,7 @@ VPNGATE_MIRROR = os.environ.get(
 )
 # 已部署的 Cloudflare Worker 检测接口 (GET /check?proxyip=host:port, 实测确认)
 WORKER_CHECK_URL = os.environ.get("CHECK_WORKER", "https://lingering-sun-a61c.393211464.workers.dev/check?sstp=vpn:vpn@")
-CONCURRENCY = max(1, int(os.environ.get("CHECK_CONCURRENCY", "10")))   # 与 Worker 网页端一致的并发模型
+CONCURRENCY = max(1, int(os.environ.get("CHECK_CONCURRENCY", "10")))   # 默认并发调整为 10，避免触发速率限制
 CHECK_TIMEOUT = float(os.environ.get("CHECK_TIMEOUT", "90"))          # 单请求客户端超时 (秒)
 MAX_CHECK_NODES = int(os.environ.get("MAX_CHECK_NODES", "0"))         # 0=不限; 本地测试可设小值
 HTTP_TIMEOUT = int(os.environ.get("HTTP_TIMEOUT", "60"))              # 拉取数据源超时
@@ -358,7 +358,7 @@ def check_one(node, session):
 
 
 def check_all(nodes, session):
-    """32 并发 (与网页端一致)。单节点失败不影响整体; 但区分'节点不可用'与'Worker 异常'。"""
+    """并发检测。单节点失败不影响整体; 但区分'节点不可用'与'Worker 异常'。"""
     results = []
     with ThreadPoolExecutor(max_workers=CONCURRENCY) as pool:
         futures = [pool.submit(check_one, n, session) for n in nodes]
@@ -681,11 +681,9 @@ def main():
 
     # 硬性失败: Worker 完全不可达 (没有任何一个请求拿到正常响应)
     if uniq and not success and len(worker_errors) == len(uniq):
-        # 【新增】打印前 3 个具体的报错原因，方便定位是 HTTP 403、404、429 还是 SSL/连接错误
         sample_errors = list({r.get("error") for r in worker_errors})[:3]
         log("CLOUDFLARE WORKER", f"异常详情示例: {sample_errors}")
         die("Worker 全部请求异常, 检测服务不可用 — 本次运行判定失败 (不生成空结果)")
-
 
     # 4) 结果 + 网页
     data = build_outputs(results, raw_count, sstp_count, source)
