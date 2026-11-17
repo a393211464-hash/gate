@@ -51,7 +51,7 @@ VPNGATE_MIRROR = os.environ.get(
     "https://raw.githubusercontent.com/fdciabdul/Vpngate-Scraper-API/main/json/data.json",
 )
 # 已部署的 Cloudflare Worker 检测接口 (GET /check?proxyip=host:port, 实测确认)
-WORKER_CHECK_URL = os.environ.get("CHECK_WORKER", "https://check.helei.kdns.fr/check?sstp=vpn:vpn@")
+WORKER_CHECK_URL = os.environ.get("CHECK_WORKER", "https://lingering-sun-a61c.393211464.workers.dev/check?sstp=vpn:vpn@")
 CONCURRENCY = max(1, int(os.environ.get("CHECK_CONCURRENCY", "32")))   # 与 Worker 网页端一致的并发模型
 CHECK_TIMEOUT = float(os.environ.get("CHECK_TIMEOUT", "90"))          # 单请求客户端超时 (秒)
 MAX_CHECK_NODES = int(os.environ.get("MAX_CHECK_NODES", "0"))         # 0=不限; 本地测试可设小值
@@ -460,8 +460,8 @@ EDGE_HOSTS = [
     h.strip()
     for h in os.environ.get(
         "EDGE_HOSTS",
-        "saas.072159.xyz:443,hzytjy.cn:443,ali.nonull.pp.ua:443,auto.dolby.dpdns.org:443,"
-        "cdn.cnno.de:443,saas.sin.fan:443,cf.777791.xyz:443",
+        "ahrefs.com:443,www.deepl.com:443,www.jp.pima.gov:443,mfa.gov.ua:443,saas.sin.fan:443,www.dbs.com.sg:443,stores.staples.com:443,m.iyf.tv:443,cdn.ctn32.us.kg:443,openai.com:443,www.udacity.com:443,constitution.congress.gov:443,uspto.gov:443,www.shopify.com:443,www.gov.il:443,53.fs1.hubspotusercontent-na1.net:443,cf.nyanya.moe:443,www.akasantech.com:443,dianomi.com:443,www.giannidelprete.it:443,staticdelivery.nexusmods.com:443,store.ubi.com:443,serviceshub.samsclub.com:443,www.crazygames.fr:443,www.dentoncounty.gov:443,www.sage.com:443,academy.7shifts.com:443,guide.for.edu.sg:443,www.broadcom.com:443,funko.com:443,www.sloomb.com:443,www.bis.gov:443,www.sofi.com:443,www.blibli.com:443,liziye.pages.dev:443,cloudflare.tv:443,mrmacintosh.com:443,dynadot.com:443,www.chess.com:443,www.lbl.gov:443,kick.com:443,www.speedtest.net:443,redis.io:443,www.visa.com.tw:443,www.ventusky.com:443,www.jsdelivr.com:443,envato.com:443,www.ox.ac.uk:443,a.pub.network:443,helium.computer:443,packtpub.com:443,99.co:443,form.assaabloy.com:443,hsl.upstate.edu:443,xn--b6gac.eu.org:443,www.whoer.net:443,encryptedsni.com:443,cozylife.app:443,www.cancilleria.gov.co:443,totoro.im:443,js.org:443,informahealthcare.com:443,wallpaperflare.com:443,www.roche.com:443,griditapp.com:443,email.lg.com:443,aimagazine.com:443,www.npmjs.com:443,hitcon.org:443,ooo.0o0.ooo:443,api-scout.reflexapi.net:443,fbi.gov:443,development.ihg.com:443,aandd.co.jp:443,www.doiting.com:443,www.transgenderdor.org:443,cdn.violet.vin:443,glitterx.cloud:443,skk.moe:443,www.meteorelectrical.com:443,yong.880805.xyz:443,www.stayaka.com:443,www.government.is:443,dash.domain.digitalplat.org:443,garuda-indonesia.com:443,sourceforge.net:443,ippure.com:443,img.imgdd.com:443,de.102198.xyz:443,bbs.alipansou.com:443,www.xiaoshuofen.com:443,elron.ee:443,www.elysee.fr:443,www.6i5.com:443,101yaoye.com:443,www.mediafire.com:443,www.postman.com:443"
+        "ahrefs.com:443,www.deepl.com:443,www.jp.pima.gov:443",
     ).split(",")
     if h.strip()
 ]
@@ -522,8 +522,8 @@ def build_hosts_text(data):
 
 
 # edgetunnel 完整订阅 (vless://) 配置
-EDT_UUID = os.environ.get("EDT_UUID", "90c14586-42a5-4c30-959d-8b36608d67f7")
-EDT_DOMAIN = os.environ.get("EDT_DOMAIN", "ed.xiaolei.qzz.io")
+EDT_UUID = os.environ.get("EDT_UUID", "4db86bf2-f486-47c2-b5fe-2a08745c7be1")
+EDT_DOMAIN = os.environ.get("EDT_DOMAIN", "autumn-art-68ed.393211464.workers.dev")
 EDT_FINGERPRINT = os.environ.get("EDT_FINGERPRINT", "chrome")
 SUB_URL = os.environ.get("SUB_URL", "https://jerylihub.github.io/gate/sub.txt")
 
